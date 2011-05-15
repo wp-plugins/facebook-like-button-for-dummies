@@ -4,7 +4,7 @@ Donate link: N/A
 Tags: facebook, like, social plugins, facebook integration, facebook open graph, opengraph
 Requires at least: 2.8
 Tested up to: 3.1
-Stable Tag: 2.0
+Stable Tag: 2.1
 
 Automatically add configurable Facebook Like buttons and enable Facebook OpenGraph support. Automatically generate OpenGraph attributes like description, image etc. Support for fb:Admins tag.
 
@@ -45,6 +45,9 @@ Please ask your questions to help complete this section.
 
 
 == Changelog ==
+
+= 2.1 =
+* Fix: Hide powered by link value not saved
 
 = 2.0 =
 * Customize Like Button Appearance.

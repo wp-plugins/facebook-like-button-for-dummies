@@ -49,6 +49,7 @@ class com_bul7_wp_FacebookLikeButtonForDummiesAdmin {
             } else {
                 $messages[] = 'Error: Max Description Length for Open Graph Protocol must be greater than zero integer. Value not updated.';
             }
+            $this->plugin->hidePoweredBy = (isset($_POST['hidePoweredBy']) && $_POST['hidePoweredBy'] == b7_HtmlHelper::CHECKBOX_VALUE);
             $this->plugin->saveSettings();
             $messages[] = 'Settings saved';
 
