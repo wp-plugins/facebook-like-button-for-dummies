@@ -3,7 +3,7 @@
 Plugin Name: Facebook Like Button for Dummies
 Plugin URI: http://devcorner.georgievi.net/pages/wordpress/wp-plugins/facebook-like-button-for-dummies
 Description: Automatically add Facebook Like button to posts, pages and archives, enable OpenGraph protocl support or Facebook content filter.
-Version: 1.2
+Version: 2.0
 Author: Ivan Georgiev
 Author URI: http://devcorner.georgievi.net/
 License: GPL2
@@ -34,11 +34,18 @@ add_action('init', create_function('', 'new com_bul7_wp_FacebookLikeButtonForDum
  * @property boolean $afterSingleShow
  * @property boolean $beforePageShow
  * @property boolean $afterPageShow
+ * @property boolean $likeButtonShowSend
+ * @property string  $likeButtonLayoutStyle
+ * @property int     $likeButtonWidth
+ * @property boolean $likeButtonShowFaces
+ * @property string  $likeButtonVerb
+ * @property string  $likeButtonFont
+ * @property string  $likeButtonScheme
  * @property boolean $openGraphEnable
- * @property string $openGraphImage
- * @property int $openGraphDescLen
- * @property string $fbAdmins
- * @property string $hidePoweredBy
+ * @property string  $openGraphImage
+ * @property int     $openGraphDescLen
+ * @property string  $fbAdmins
+ * @property string  $hidePoweredBy
  */
 class com_bul7_wp_FacebookLikeButtonForDummies {
     public $options;
@@ -72,17 +79,28 @@ class com_bul7_wp_FacebookLikeButtonForDummies {
     }
 
     public function filterContent($content) {
-        $button = '<fb:like href="'
-                    . urlencode(get_permalink())
-                    . '"  show_faces="true" width="490" font=""'
-                    . "\"></fb:like>\r\n";
+        $likeButton = $this->getLikeButtonCode();
         $pageType = $this->getPageType();
-        $content = ($this->{'before'.$pageType.'Show'} ? $button : '') .
+        $content = ($this->{'before'.$pageType.'Show'} ? $likeButton : '') .
             $content .
-            ($this->{'after'.$pageType.'Show'} ? $button : '');
-        $content .= '<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><!-- Do not remove -->';
+            ($this->{'after'.$pageType.'Show'} ? $likeButton : '');
+        $content .= '<div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><!-- Do not remove -->';
         
         return $content;
+    }
+
+    private function getLikeButtonCode() {
+        // return '<fb:like href="http://cook/a/spring-salad" send="true" width="450" show_faces="true" font="lucida grande"></fb:like>';
+        return '<fb:like'
+                    . ' href="'.urlencode(get_permalink()).'"'
+                    . ' send="'.($this->likeButtonShowSend ? 'true' : 'false').'"'
+                    . ($this->likeButtonLayoutStyle ? ' layout="'.$this->likeButtonLayoutStyle.'"' : '')
+                    . ' width="'.$this->likeButtonWidth.'"'
+                    . ' show_faces="'.($this->likeButtonShowFaces ? 'true' : 'false').'"'
+                    . ($this->likeButtonVerb ? ' action="'.$this->likeButtonVerb.'"' : '')
+                    . ' font="'.$this->likeButtonFont.'"'
+                    . ($this->likeButtonScheme != '' ? ' colorscheme="'.$this->likeButtonScheme.'"' : '')
+                    . "></fb:like>\n";
     }
 
     private function getDefaults() {
@@ -92,6 +110,13 @@ class com_bul7_wp_FacebookLikeButtonForDummies {
             'afterSingleShow' => TRUE,
             'beforePageShow' => FALSE,
             'afterPageShow' => TRUE,
+            'likeButtonShowSend' => FALSE,
+            'likeButtonLayoutStyle' => '',
+            'likeButtonWidth' => 450,
+            'likeButtonShowFaces' => TRUE,
+            'likeButtonVerb' => '',
+            'likeButtonFont' => '',
+            'likeButtonScheme' => '',
             'openGraphEnable' => TRUE,
             'openGraphImage' => '',
             'openGraphDescLen' => 200,

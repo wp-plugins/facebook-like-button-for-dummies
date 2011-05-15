@@ -30,6 +30,17 @@ class com_bul7_wp_FacebookLikeButtonForDummiesAdmin {
             $this->plugin->afterSingleShow = (isset($_POST['afterSingleShow']) && $_POST['afterSingleShow'] == b7_HtmlHelper::CHECKBOX_VALUE);
             $this->plugin->beforePageShow = (isset($_POST['beforePageShow']) && $_POST['beforePageShow'] == b7_HtmlHelper::CHECKBOX_VALUE);
             $this->plugin->afterPageShow = (isset($_POST['afterPageShow']) && $_POST['afterPageShow'] == b7_HtmlHelper::CHECKBOX_VALUE);
+            $this->plugin->likeButtonShowSend = (isset($_POST['likeButtonShowSend']) && $_POST['likeButtonShowSend'] == b7_HtmlHelper::CHECKBOX_VALUE);
+            $this->plugin->likeButtonLayoutStyle = (isset($_POST['likeButtonLayoutStyle']) ? $_POST['likeButtonLayoutStyle'] : '');
+            if (isset($_POST['likeButtonWidth']) && is_numeric($_POST['likeButtonWidth']) && intval($_POST['likeButtonWidth']) > 0) {
+                $this->plugin->likeButtonWidth = intval($_POST['likeButtonWidth']);
+            } else {
+                $messages[] = 'Error: Like Button Width must be integer, greater than zero. Value not updated.';
+            }
+            $this->plugin->likeButtonShowFaces = (isset($_POST['likeButtonShowFaces']) && $_POST['likeButtonShowFaces'] == b7_HtmlHelper::CHECKBOX_VALUE);
+            $this->plugin->likeButtonVerb = (isset($_POST['likeButtonVerb']) ? $_POST['likeButtonVerb'] : '');
+            $this->plugin->likeButtonFont = (isset($_POST['likeButtonFont']) ? $_POST['likeButtonFont'] : '');
+            $this->plugin->likeButtonScheme = (isset($_POST['likeButtonScheme']) ? $_POST['likeButtonScheme'] : '');
             $this->plugin->openGraphEnable = (isset($_POST['openGraphEnable']) && $_POST['openGraphEnable'] == b7_HtmlHelper::CHECKBOX_VALUE);
             $this->plugin->openGraphImage = (isset($_POST['openGraphImage']) ? $_POST['openGraphImage'] : '');
             $this->plugin->fbAdmins = (isset($_POST['fbAdmins']) ? $_POST['fbAdmins'] : '');
@@ -92,6 +103,66 @@ class com_bul7_wp_FacebookLikeButtonForDummiesAdmin {
                             'id' => 'afterPageShow'
                         )); ?>
                         <label for="afterPageShow">Place Like Button After Page Content</label>
+                    </td>
+                </tr>
+            </table>
+
+            <h3>Like Button Appearance</h3>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row">&nbsp;</th>
+                    <td><?php echo b7_HtmlHelper::checkbox('likeButtonShowSend', $likeButtonShowSend, array(
+                            'id' => 'likeButtonShowSend'
+                        )); ?>
+                        <label for="likeButtonShowSend">Show Send Button</label>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="likeButtonLayoutStyle">Layout Style</label></th>
+                    <td><?php echo b7_HtmlHelper::listbox('likeButtonLayoutStyle', explode(',', ',standard,button_count,box_count'), $likeButtonLayoutStyle, array(
+                            'id' => 'likeButtonLayoutStyle'
+                        )); ?>
+
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="likeButtonWidth">Width</label></th>
+                    <td><?php echo b7_HtmlHelper::textBox('likeButtonWidth', $likeButtonWidth, array(
+                            'id' => 'likeButtonWidth',
+                            'size' => 12
+                        )); ?>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">&nbsp;</th>
+                    <td><?php echo b7_HtmlHelper::checkbox('likeButtonShowFaces', $likeButtonShowFaces, array(
+                            'id' => 'likeButtonShowFaces'
+                        )); ?>
+                        <label for="likeButtonShowFaces">Show Faces with Like Button</label>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="likeButtonVerb">Verb to Display</label></th>
+                    <td><?php echo b7_HtmlHelper::listbox('likeButtonVerb', explode(',', ',like,recommend'), $likeButtonVerb, array(
+                            'id' => 'likeButtonVerb'
+                        )); ?>
+
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="likeButtonFont">Font</label></th>
+                    <td><?php echo b7_HtmlHelper::listbox('likeButtonFont', explode(',', ',arial,lucida grande,segoe ui,tahoma,trebuchet ms,verdana'), $likeButtonFont, array(
+                            'id' => 'likeButtonFont'
+                        )); ?>
+                        
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="likeButtonScheme">Color Scheme</label></th>
+                    <td><?php echo b7_HtmlHelper::listbox('likeButtonScheme', explode(',', ',light,dark'), $likeButtonScheme, array(
+                            'id' => 'likeButtonScheme'
+                        )); ?>
+
                     </td>
                 </tr>
             </table>
