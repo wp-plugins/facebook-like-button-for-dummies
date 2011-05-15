@@ -8,10 +8,18 @@ class com_bul7_wp_FacebookLikeButtonForDummiesAdmin {
 
     public function __construct($plugin) {
         $this->plugin = $plugin;
-        add_options_page('Facebook Like Button for Dummies', 'FB Like 4 Dummies', 'administrator', get_class($this), array(&$this, 'adminSettingsPage'));
+        add_options_page('Facebook Like Button for Dummies', 'FB Like 4 Dummies', 'administrator', get_class($this), array(&$this, 'goAdminSettingsPage'));
+        add_filter( 'plugin_action_links', array($this, 'filterPluginActionLinks'), 10, 2 );
+
     }
 
-    public function adminSettingsPage() {
+    public function filterPluginActionLinks($links, $file) {
+        if ($file == plugin_basename( dirname(__FILE__).'/plugin.php')) {
+            $links[] = '<a href="options-general.php?page='.get_class($this).'">Settings</a>';
+        }
+        return $links;
+    }
+    public function goAdminSettingsPage() {
         if (!class_exists('b7_HtmlHelper')) require_once(dirname(__FILE__).'/b7_HtmlHelper.php');
         $isSubmitted = isset($_POST['formToken']) && $_POST['formToken'] == $this->getFormToken();
 
@@ -120,6 +128,18 @@ class com_bul7_wp_FacebookLikeButtonForDummiesAdmin {
                             'id' => 'fbAdmins',
                             'size' => 64
                         )); ?>
+                    </td>
+                </tr>
+            </table>
+
+            <h3>Other</h3>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row">&nbsp;</th>
+                    <td><?php echo b7_HtmlHelper::checkbox('hidePoweredBy', $hidePoweredBy, array(
+                            'id' => 'hidePoweredBy'
+                        )); ?>
+                        <label for="hidePoweredBy">Hide Powered By Link</label>
                     </td>
                 </tr>
             </table>
