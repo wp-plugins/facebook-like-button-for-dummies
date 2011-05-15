@@ -3,7 +3,7 @@
 Plugin Name: Facebook Like Button for Dummies
 Plugin URI: http://devcorner.georgievi.net/pages/wordpress/wp-plugins/facebook-like-button-for-dummies
 Description: Automatically add Facebook Like button to posts, pages and archives, enable OpenGraph protocl support or Facebook content filter.
-Version: 1.0
+Version: 1.1
 Author: Ivan Georgiev
 Author URI: http://devcorner.georgievi.net/
 License: GPL2
